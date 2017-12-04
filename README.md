@@ -24,3 +24,24 @@ Note ➜ Providing Market Survey results falls outside the scope of this assignm
 # Provide Information on Available Data on Market Surveys
 
 The Provide information on available Market Surveys process allows the Information Requester to send a request message (Request for information on available Market Surveys) to the Information Provider asking for information on Market Surveys available from the Information Provider. The request will provide information on the subject in which the Information Requester has an interest allowing the Information Provider to find the most relevant Market Surveys. The process further allows the Information Provider to respond with information about the relevant Market Surveys he may provide and the conditions under which they are available.
+
+
+
+
+
+# REST API
+End points
+
+http://localhost:8080/api/customer
+http://localhost:8080/api/provider
+http://localhost:8080/api/subscription
+http://localhost:8080/api/survey
+
+# To request MarketSurveys information
+
+http://localhost:8080/api/survey/provider/2/request?targetGender=ALL&targetIncomeCurrency=USD&targetIncomeL=30000&targetIncomeH=50000&targetAgeH=80&targetAgeL=50
+
+
+
+
+
