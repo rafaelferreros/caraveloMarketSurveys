@@ -20,7 +20,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping(value = "/api/survey", produces = "application/hal+json")
+    @RequestMapping(value = "/api/survey", produces = "application/hal+json")
 @ExposesResourceFor(Survey.class)
 public class SurveyController {
 

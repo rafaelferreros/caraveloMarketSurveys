@@ -51,6 +51,7 @@ public class Application {
         return survey;
     }
 
+        //populating database
     @Bean
     CommandLineRunner init(ProviderRepository providerRepository,
                            SurveyRepository surveyRepository,
