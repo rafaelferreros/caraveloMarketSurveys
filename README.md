@@ -1,5 +1,6 @@
 # caraveloMarketSurveys
-Caravelo Market Surveys Recruitment Assignment
+
+# Caravelo Market Surveys Recruitment Assignment
 
 Assignment
 Design a beautiful REST API for our new Marketing Research System. Your design must comply with the key business requirements outlined below.
@@ -22,12 +23,4 @@ Note ➜ Providing Market Survey results falls outside the scope of this assignm
 
 # Provide Information on Available Data on Market Surveys
 
-The Provide information on available Market Surveys process allows the
-Information Requester to send a request message (Request for information on
-available Market Surveys) to the Information Provider asking for information on
-Market Surveys available from the Information Provider. The request will provide
-information on the subject in which the Information Requester has an interest
-allowing the Information Provider to find the most relevant Market Surveys.
-The process further allows the Information Provider to respond with information
-about the relevant Market Surveys he may provide and the conditions under
-which they are available.
+The Provide information on available Market Surveys process allows the Information Requester to send a request message (Request for information on available Market Surveys) to the Information Provider asking for information on Market Surveys available from the Information Provider. The request will provide information on the subject in which the Information Requester has an interest allowing the Information Provider to find the most relevant Market Surveys. The process further allows the Information Provider to respond with information about the relevant Market Surveys he may provide and the conditions under which they are available.
