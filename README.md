@@ -32,10 +32,10 @@ The Provide information on available Market Surveys process allows the Informati
 # REST API
 End points
 
-http://localhost:8080/api/customer
-http://localhost:8080/api/provider
-http://localhost:8080/api/subscription
-http://localhost:8080/api/survey
+* http://localhost:8080/api/customer
+* http://localhost:8080/api/provider
+* http://localhost:8080/api/subscription
+* http://localhost:8080/api/survey
 
 # To request MarketSurveys information
 
