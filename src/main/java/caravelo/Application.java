@@ -1,8 +1,12 @@
 package caravelo;
 
+import caravelo.entities.Customer;
 import caravelo.entities.Provider;
+import caravelo.entities.Subscription;
 import caravelo.entities.Survey;
+import caravelo.repositories.CustomerRepostory;
 import caravelo.repositories.ProviderRepository;
+import caravelo.repositories.SubscriptionRepository;
 import caravelo.repositories.SurveyRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Arrays;
+import java.util.Random;
 
 @SpringBootApplication
 public class Application {
@@ -23,32 +28,109 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
+
+    private static Survey fillSurveyRandomly(Survey survey){
+        Random r = new Random();
+
+        int ageL = r.ints(1, 2, 7).findFirst().getAsInt();
+        int ageH = r.ints(1, ageL+1, 9).findFirst().getAsInt();
+        survey.setTargetAgeL(ageL*10);
+        survey.setTargetAgeH(ageH*10);
+
+        int genderIndex = r.ints(1, 0, 3).findFirst().getAsInt();
+        survey.setTargetGender(Survey.TargetGender.values()[genderIndex]);
+
+        int currencyIndex = r.ints(1, 0, 3).findFirst().getAsInt();
+        survey.setTargetIncomeCurrency(Survey.Currency.values()[currencyIndex]);
+
+        int incomeL = r.ints(1, 5, 40).findFirst().getAsInt();
+        int incomeH = r.ints(1, incomeL+1, 80).findFirst().getAsInt();
+        survey.setTargetIncomeL(incomeL*1000);
+        survey.setTargetIncomeH(incomeH*1000);
+
+        return survey;
+    }
+
     @Bean
     CommandLineRunner init(ProviderRepository providerRepository,
-                           SurveyRepository surveyRepository) {
+                           SurveyRepository surveyRepository,
+                           CustomerRepostory customerRepostory,
+                           SubscriptionRepository subscriptionRepository) {
 
-        return (evt) ->{{
-            Provider provider = providerRepository.save(new Provider("Surveys & Co"));
-            surveyRepository.save(new Survey(provider,"Best survey ever"));
-            surveyRepository.save(new Survey(provider,"Another survey"));
-            surveyRepository.save(new Survey(provider,"This is an important survey"));
-        }
+        return (evt) ->{
 
-        {
-            Provider provider = providerRepository.save(new Provider("The Provider #1"));
-            surveyRepository.save(new Survey(provider,"Survey 1"));
-            surveyRepository.save(new Survey(provider,"Survey 2"));
-            surveyRepository.save(new Survey(provider,"Survey 3"));
-            surveyRepository.save(new Survey(provider,"Survey 4"));
-        }
+            //Adding provider to DB.
+            {
+                Provider provider = providerRepository.save(new Provider("Surveys & Co"));
 
-        {
-            Provider provider = providerRepository.save(new Provider("The Provider #2"));
-            surveyRepository.save(new Survey(provider,"Survey 101"));
-            surveyRepository.save(new Survey(provider,"Survey 201"));
-            surveyRepository.save(new Survey(provider,"Survey 301"));
-            surveyRepository.save(new Survey(provider,"Survey 404"));
-        }};
+                {
+                    Survey survey = fillSurveyRandomly(new Survey(provider, "Best survey ever"));
+                    surveyRepository.save(survey);
+                }
+                {
+                    Survey survey = fillSurveyRandomly(new Survey(provider, "Another survey"));
+                    surveyRepository.save(survey);
+                }
+                {
+                    Survey survey = fillSurveyRandomly(new Survey(provider, "This is an important survey"));
+                    surveyRepository.save(survey);
+                }
+            }
+
+            {
+                Provider provider = providerRepository.save(new Provider("The Provider #1"));
+                for(int i=0; i<99; i++){
+                    Survey survey = fillSurveyRandomly(new Survey(provider, "Survey 10"+i));
+                    surveyRepository.save(survey);
+                }
+            }
+
+            {
+                Provider provider = providerRepository.save(new Provider("The Provider #2"));
+                for(int i=0; i<5; i++){
+                    Survey survey = fillSurveyRandomly(new Survey(provider, "Survey 20"+i));
+                    surveyRepository.save(survey);
+                }
+            }
+
+            {
+                Provider provider = providerRepository.save(new Provider("The Provider #3"));
+                for(int i=0; i<5; i++){
+                    Survey survey = fillSurveyRandomly(new Survey(provider, "Survey 30"+i));
+                    surveyRepository.save(survey);
+                }
+            }
+
+
+            //Adding customers.
+            {
+                Customer customer =  customerRepostory.save(new Customer("Rafael Ferrero"));
+                subscriptionRepository.save(new Subscription(
+                        customer,
+                        "All the Surveys",
+                        Subscription.Frequency.DAYLY,
+                        Subscription.Channel.MAIL));
+                subscriptionRepository.save(new Subscription(
+                        customer,
+                        "Some Surveys",
+                        Subscription.Frequency.MONTHLY,
+                        Subscription.Channel.MAIL));
+            }
+
+            {
+                Customer customer =  customerRepostory.save(new Customer("Caravelo Customer"));
+                subscriptionRepository.save(new Subscription(
+                        customer,
+                        "Nice Surveys",
+                        Subscription.Frequency.DAYLY,
+                        Subscription.Channel.MAIL));
+                subscriptionRepository.save(new Subscription(
+                        customer,
+                        "Old Surveys",
+                        Subscription.Frequency.MONTHLY,
+                        Subscription.Channel.MAIL));
+            }
+        };
 
     }
 

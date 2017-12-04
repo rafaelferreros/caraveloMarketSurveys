@@ -1,5 +1,7 @@
 package caravelo.entities;
 
+import org.springframework.hateoas.ResourceSupport;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Provider {
+public class Customer {
 
     @Id
     @GeneratedValue
@@ -16,15 +18,16 @@ public class Provider {
 
     private String name;
 
-    @OneToMany(mappedBy = "provider")
-    private Set<Survey> surveys = new HashSet<>();
+    @OneToMany(mappedBy = "customer")
+    private Set<Subscription> subscriptions = new HashSet<>();
 
-    Provider() {
+    Customer() {
     }
 
-    public Provider(String name) {
-         this.name = name;
+    public Customer(String name) {
+        this.name = name;
     }
+
 
     public String getName() {
         return name;
@@ -35,6 +38,6 @@ public class Provider {
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 }
