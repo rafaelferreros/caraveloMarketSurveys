@@ -1,6 +1,9 @@
 package caravelo.controllers;
 
+import caravelo.entities.Customer;
 import caravelo.entities.Subscription;
+import caravelo.repositories.CustomerRepository;
+import caravelo.repositories.ProviderRepository;
 import caravelo.repositories.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
@@ -24,6 +27,13 @@ public class SubscriptionController {
     @Autowired
     private SubscriptionRepository subscriptionRepository;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
+    private ProviderRepository providerRepository;
+
+
     @RequestMapping(method = RequestMethod.GET, value = "/customer/{customerId}")
     public Resources<Resource<Subscription>> getSubscriptionByCustomerId(@PathVariable Long customerId) {
 
@@ -31,6 +41,23 @@ public class SubscriptionController {
 
         return subscriptionToResource(subscriptionRepository.findByCustomerId(customerId), selfLink);
 
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/customer/{customerId}")
+    public Resource<Subscription> addSubscription(@PathVariable Long customerId, @RequestBody Subscription subscription) {
+
+       Customer customer = customerRepository.getOne(customerId);
+
+       if(customer != null)
+       {
+           subscription.setCustomer(customer);
+           subscriptionRepository.save(subscription);
+
+           return subscriptionToResource(subscription);
+       }
+       else{
+           throw new RuntimeException("Customer not found");
+       }
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -46,7 +73,7 @@ public class SubscriptionController {
     public Resource<Subscription> getSubscriptionById(@PathVariable Long id) {
 
         Subscription subscription = subscriptionRepository.findOne(id);
-        return subscriptionToResource(subscription);
+          return subscriptionToResource(subscription);
 
     }
 

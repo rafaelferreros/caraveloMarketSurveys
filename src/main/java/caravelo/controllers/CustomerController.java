@@ -2,7 +2,7 @@ package caravelo.controllers;
 
 import caravelo.entities.Customer;
 import caravelo.entities.Subscription;
-import caravelo.repositories.CustomerRepostory;
+import caravelo.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.*;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class CustomerController {
 
     @Autowired
-    private CustomerRepostory customerRepository;
+    private CustomerRepository customerRepository;
 
     @Autowired
     EntityLinks entityLinks;

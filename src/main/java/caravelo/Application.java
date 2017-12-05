@@ -4,7 +4,7 @@ import caravelo.entities.Customer;
 import caravelo.entities.Provider;
 import caravelo.entities.Subscription;
 import caravelo.entities.Survey;
-import caravelo.repositories.CustomerRepostory;
+import caravelo.repositories.CustomerRepository;
 import caravelo.repositories.ProviderRepository;
 import caravelo.repositories.SubscriptionRepository;
 import caravelo.repositories.SurveyRepository;
@@ -15,7 +15,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.Arrays;
 import java.util.Random;
 
 @SpringBootApplication
@@ -55,7 +54,7 @@ public class Application {
     @Bean
     CommandLineRunner init(ProviderRepository providerRepository,
                            SurveyRepository surveyRepository,
-                           CustomerRepostory customerRepostory,
+                           CustomerRepository customerRepository,
                            SubscriptionRepository subscriptionRepository) {
 
         return (evt) ->{
@@ -105,29 +104,25 @@ public class Application {
 
             //Adding customers.
             {
-                Customer customer =  customerRepostory.save(new Customer("Rafael Ferrero"));
+                Customer customer =  customerRepository.save(new Customer("Rafael Ferrero"));
                 subscriptionRepository.save(new Subscription(
                         customer,
-                        "All the Surveys",
                         Subscription.Frequency.DAYLY,
                         Subscription.Channel.MAIL));
                 subscriptionRepository.save(new Subscription(
                         customer,
-                        "Some Surveys",
                         Subscription.Frequency.MONTHLY,
                         Subscription.Channel.MAIL));
             }
 
             {
-                Customer customer =  customerRepostory.save(new Customer("Caravelo Customer"));
+                Customer customer =  customerRepository.save(new Customer("Caravelo Customer"));
                 subscriptionRepository.save(new Subscription(
                         customer,
-                        "Nice Surveys",
                         Subscription.Frequency.DAYLY,
                         Subscription.Channel.MAIL));
                 subscriptionRepository.save(new Subscription(
                         customer,
-                        "Old Surveys",
                         Subscription.Frequency.MONTHLY,
                         Subscription.Channel.MAIL));
             }
