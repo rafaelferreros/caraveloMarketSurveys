@@ -55,5 +55,9 @@ http://localhost:8080/api/subscription/customer/1
 }
 
 
+I know it is not a complete solution, but I am confident that the small project can show to your team that I understand and I can develop a Rest API, and I can generate value, during a real project.
+
+I was trying to implement HATEOAS with Spring MVC. I added the .jar to the repository just in case.
+The project is running with JAVA 8
 
 
